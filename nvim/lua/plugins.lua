@@ -27,7 +27,10 @@ return require("packer").startup(function(use)
 		run = function() local ts_update = require("nvim-treesitter.install").update({ with_sync = true }) ts_update() end,
 	}
 
-	use "kdheepak/lazygit.nvim"
+  use "mhartington/formatter.nvim"
+
+  use "tpope/vim-fugitive"
+  use "tpope/vim-rhubarb"
 
 	use "hrsh7th/nvim-cmp"
 	use "hrsh7th/cmp-nvim-lsp"
