@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup {
         "make",
         "markdown",
         "python",
+        "r",
         "typescript",
         "yaml",
     },
