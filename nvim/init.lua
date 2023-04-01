@@ -1,9 +1,9 @@
 require("plugins")
 
-require("custom-keymaps")
-require("mason-config")
-require("neovim-tree")
-require("treesitter-config")
+require("keymaps")
+require("lsp")
+require("tree")
+require("treesitter")
 
 vim.opt.clipboard = "unnamedplus"
 vim.cmd("colorscheme industry")
