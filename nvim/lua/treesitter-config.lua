@@ -22,5 +22,3 @@ require("nvim-treesitter.configs").setup {
     },
 }
 
-vim.cmd('command! TSInstallAllParsers lua require("nvim-treesitter.configs").ensure_installed()')
-
