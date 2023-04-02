@@ -1,5 +1,5 @@
 return require("packer").startup(function(use)
-	use "wbthomason/packer.nvim"
+  use "wbthomason/packer.nvim"
 
   use {
     "neovim/nvim-lspconfig",
@@ -9,20 +9,20 @@ return require("packer").startup(function(use)
     }
   }
 
-	use {
-		"nvim-tree/nvim-tree.lua",
-		requires = {
-			"nvim-tree/nvim-web-devicons",
-		}
-	}
+  use {
+    "nvim-tree/nvim-tree.lua",
+    requires = {
+      "nvim-tree/nvim-web-devicons",
+    }
+  }
 
   -- Fuzzy finder
-	use {
-		"nvim-telescope/telescope.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim"
-		}
-	}
+  use {
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim"
+    }
+  }
 
   -- Syntax highlighting
   use {
@@ -48,9 +48,8 @@ return require("packer").startup(function(use)
 
   -- Autocompletion
   use "hrsh7th/nvim-cmp"
-	use "hrsh7th/cmp-nvim-lsp-signature-help"
-	use "hrsh7th/cmp-nvim-lua"
-	use "hrsh7th/cmp-path"
+  use "hrsh7th/cmp-nvim-lsp-signature-help"
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-nvim-lsp"
-
 end)
