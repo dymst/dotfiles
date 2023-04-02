@@ -1,11 +1,22 @@
 require("mason").setup()
 
-local servers = { "clangd", "pyright", "tsserver", "lua_ls", "gopls" }
+local servers = {
+  "black",
+  "clang-format",
+  "clangd",
+  "gopls",
+  "hadolint",
+  "lua_ls",
+  "pyright",
+  "shellcheck",
+  "tectonic",
+  "tsserver",
+  "yamllint",
+}
 
 -- LSP settings
 -- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
     if vim.lsp.buf.format then
@@ -29,4 +40,3 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-
