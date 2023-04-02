@@ -1,17 +1,11 @@
 require("mason").setup()
 
 local servers = {
-  "black",
-  "clang-format",
   "clangd",
   "gopls",
-  "hadolint",
   "lua_ls",
   "pyright",
-  "shellcheck",
-  "tectonic",
   "tsserver",
-  "yamllint",
 }
 
 -- LSP settings
