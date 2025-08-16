@@ -1,55 +1,66 @@
-return require("packer").startup(function(use)
-  use "wbthomason/packer.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-  use {
+require("lazy").setup({
+  {
     "neovim/nvim-lspconfig",
-    requires = {
+    dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     }
-  }
+  },
 
-  use {
+  {
     "nvim-tree/nvim-tree.lua",
-    requires = {
+    dependencies = {
       "nvim-tree/nvim-web-devicons",
     }
-  }
+  },
 
   -- Fuzzy finder
-  use {
+  {
     "nvim-telescope/telescope.nvim",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim"
     }
-  }
+  },
 
   -- Syntax highlighting
-  use {
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = function()
+    build = function()
       pcall(require("nvim-treesitter.install").update { with_sync = true })
     end,
-  }
+  },
 
   -- Additional text objects via treesitter
-  use {
+  {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    after = "nvim-treesitter",
-  }
+    dependencies = "nvim-treesitter/nvim-treesitter",
+  },
 
   -- Formatter
-  use "mhartington/formatter.nvim"
+  "mhartington/formatter.nvim",
 
   -- Git related
-  use "tpope/vim-fugitive"
-  use "tpope/vim-rhubarb"
-  use "lewis6991/gitsigns.nvim"
+  "tpope/vim-fugitive",
+  "tpope/vim-rhubarb",
+  "lewis6991/gitsigns.nvim",
 
   -- Autocompletion
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-nvim-lsp-signature-help"
-  use "hrsh7th/cmp-nvim-lua"
-  use "hrsh7th/cmp-path"
-  use "hrsh7th/cmp-nvim-lsp"
-end)
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-nvim-lsp-signature-help",
+  "hrsh7th/cmp-nvim-lua",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-nvim-lsp",
+})
