@@ -5,7 +5,7 @@ local servers = {
   "gopls",
   "lua_ls",
   "pyright",
-  "ts_ls",
+  "tsserver",
 }
 
 -- LSP settings
