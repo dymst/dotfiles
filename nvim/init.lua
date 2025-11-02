@@ -4,7 +4,7 @@ require("keymaps")
 require("lsp")
 require("tree")
 require("treesitter")
-require("formatter")
+-- require("formatter")
 
 vim.opt.clipboard = "unnamedplus"
 vim.cmd("colorscheme industry")
