@@ -39,13 +39,14 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    tag = 'v0.8.0',
+    tag = "v0.9.1",
   },
 
   -- Additional text objects via treesitter
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = "nvim-treesitter/nvim-treesitter",
+    tag = "v0.11.0",
   },
 
   -- Formatter
