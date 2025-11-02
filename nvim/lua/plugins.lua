@@ -39,6 +39,7 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    tag = 'v0.8.0',
   },
 
   -- Additional text objects via treesitter
@@ -61,8 +62,4 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-nvim-lsp",
-}, {
-  checker = {
-    enabled = true,
-  },
 })
