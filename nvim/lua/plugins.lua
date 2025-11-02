@@ -38,6 +38,8 @@ require("lazy").setup({
   -- Syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    tag = 'v0.8.0',
   },
 
   -- Additional text objects via treesitter
