@@ -1,3 +1,4 @@
+require("nvim-treesitter.install").command = "/usr/local/bin/tree-sitter"
 require("nvim-treesitter.install").prefer_git = true
 
 require("nvim-treesitter.configs").setup {
