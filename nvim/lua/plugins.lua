@@ -22,6 +22,7 @@ require("lazy").setup({
 
   {
     "nvim-tree/nvim-tree.lua",
+    lazy = false,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     }
@@ -39,23 +40,23 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    tag = "v0.9.1",
+    lazy = false,
   },
 
   -- Additional text objects via treesitter
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = "nvim-treesitter/nvim-treesitter",
-    tag = "v0.11.0",
+    lazy = false,
   },
 
   -- Formatter
-  "mhartington/formatter.nvim",
+  "stevearc/conform.nvim",
 
   -- Git related
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
-  "lewis6991/gitsigns.nvim",
+  { "lewis6991/gitsigns.nvim", lazy = false },
 
   -- Autocompletion
   "hrsh7th/nvim-cmp",
@@ -63,4 +64,6 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-nvim-lsp",
+  "saadparwaiz1/cmp_luasnip",
+  "L3MON4D3/LuaSnip",
 })
