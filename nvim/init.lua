@@ -19,7 +19,6 @@ safe_require("tree")
 safe_require("treesitter")
 safe_require("formatting")
 safe_require("completion")
-safe_require("image-config")
 
 vim.opt.clipboard = "unnamedplus"
 

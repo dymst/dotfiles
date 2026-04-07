@@ -1,8 +1,29 @@
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
--- empty setup using defaults
-require("nvim-tree").setup()
+local function on_attach(bufnr)
+  local api = require('nvim-tree.api')
+
+  local function opts(desc)
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- Default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- Custom mapping for image preview
+  vim.keymap.set('n', 'P', function()
+    local node = api.tree.get_node_under_cursor()
+    if node and node.absolute_path then
+      vim.cmd("ImagePreview " .. node.absolute_path)
+    end
+  end, opts('Preview Image'))
+end
+
+-- setup with on_attach
+require("nvim-tree").setup({
+  on_attach = on_attach,
+})
 
 require("nvim-web-devicons").setup {
   -- your personnal icons can go here (to override)

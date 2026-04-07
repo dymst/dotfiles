@@ -67,16 +67,14 @@ require("lazy").setup({
   "saadparwaiz1/cmp_luasnip",
   "L3MON4D3/LuaSnip",
 
-  -- LuaRocks for image.nvim dependencies
+  -- Image preview (simpler alternative using chafa)
   {
-    "vhyrro/luarocks.nvim",
-    priority = 1000,
-    config = true,
-  },
-
-  -- Image support
-  {
-    "3rd/image.nvim",
-    dependencies = { "luarocks.nvim" },
+    "adelarsq/image_preview.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("image_preview").setup({
+        -- preview_method = "chafa", -- default is "ueberzug" or "chafa" if ueberzug is missing
+      })
+    end,
   },
 })
