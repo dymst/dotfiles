@@ -27,9 +27,10 @@ function M.PreviewImage(filepath)
   })
 
   -- Run chafa in a terminal inside the floating window
-  -- --symbols=vhigh uses the highest density character set for much sharper detail
-  -- --workroom=none ensures the window isn't cleared weirdly
-  local cmd = string.format("chafa --format=symbols --symbols=vhigh --size=%dx%d --workroom=none '%s'; read -n 1 -s -p 'Press any key to close...'", width, height-2, filepath)
+  -- Use --format=auto to pick the best graphics protocol (Kitty/Sixel)
+  -- Wrap output in tmux escape sequences if inside tmux
+  local chafa_cmd = string.format("chafa --format=auto --size=%dx%d --workroom=none '%s'", width, height-2, filepath)
+  local cmd = string.format("if [ -n \"$TMUX\" ]; then printf '\\ePtmux;\\e'; %s; printf '\\e\\\\'; else %s; fi; read -n 1 -s -p 'Press any key to close...'", chafa_cmd, chafa_cmd)
   
   vim.fn.termopen(cmd, {
     on_exit = function()
