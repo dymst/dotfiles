@@ -73,7 +73,7 @@ require("lazy").setup({
     lazy = false,
     config = function()
       require("image_preview").setup({
-        -- preview_method = "chafa", -- can be "chafa", "viuer", etc.
+        preview_method = "chafa",
       })
     end,
   },
