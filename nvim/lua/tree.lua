@@ -15,7 +15,8 @@ local function on_attach(bufnr)
   vim.keymap.set('n', 'p', function()
     local node = api.tree.get_node_under_cursor()
     if node and node.type == "file" then
-      require("image_preview").PreviewImage(node.absolute_path)
+      -- Snacks automatically handles Ghostty, tmux passthrough, and high-res rendering
+      Snacks.image.hover()
     end
   end, opts('Preview Image'))
 end

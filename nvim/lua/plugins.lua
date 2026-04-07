@@ -67,14 +67,13 @@ require("lazy").setup({
   "saadparwaiz1/cmp_luasnip",
   "L3MON4D3/LuaSnip",
 
-  -- Image preview
+  -- Snacks.nvim (Modern utilities including high-res image support)
   {
-    "adelarsq/image_preview.nvim",
+    "folke/snacks.nvim",
+    priority = 1000,
     lazy = false,
-    config = function()
-      require("image_preview").setup({
-        preview_method = "chafa",
-      })
-    end,
+    opts = {
+      image = { enabled = true },
+    },
   },
 })
