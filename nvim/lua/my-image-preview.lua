@@ -27,8 +27,9 @@ function M.PreviewImage(filepath)
   })
 
   -- Run chafa in a terminal inside the floating window
-  -- --format=symbols uses braille/ascii which works in ALL terminals and tmux
-  local cmd = string.format("chafa --format=symbols --size=%dx%d '%s'; read -n 1 -s -p 'Press any key to close...'", width, height-2, filepath)
+  -- --symbols=vhigh uses the highest density character set for much sharper detail
+  -- --workroom=none ensures the window isn't cleared weirdly
+  local cmd = string.format("chafa --format=symbols --symbols=vhigh --size=%dx%d --workroom=none '%s'; read -n 1 -s -p 'Press any key to close...'", width, height-2, filepath)
   
   vim.fn.termopen(cmd, {
     on_exit = function()
