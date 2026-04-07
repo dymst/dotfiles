@@ -66,15 +66,4 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp",
   "saadparwaiz1/cmp_luasnip",
   "L3MON4D3/LuaSnip",
-
-  -- Image preview (simpler alternative using chafa)
-  {
-    "adelarsq/image_preview.nvim",
-    lazy = false,
-    config = function()
-      require("image_preview").setup({
-        -- preview_method = "chafa", -- default is "ueberzug" or "chafa" if ueberzug is missing
-      })
-    end,
-  },
 })
