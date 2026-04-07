@@ -15,7 +15,7 @@ local function on_attach(bufnr)
   vim.keymap.set('n', 'p', function()
     local node = api.tree.get_node_under_cursor()
     if node and node.type == "file" then
-      require("my-image-preview").PreviewImage(node.absolute_path)
+      require("image_preview").PreviewImage(node.absolute_path)
     end
   end, opts('Preview Image'))
 end
