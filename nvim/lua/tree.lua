@@ -11,11 +11,11 @@ local function on_attach(bufnr)
   -- Default mappings
   api.config.mappings.default_on_attach(bufnr)
 
-  -- Custom mapping for image preview
-  vim.keymap.set('n', 'P', function()
+  -- Add custom mapping for image preview on 'p'
+  vim.keymap.set('n', 'p', function()
     local node = api.tree.get_node_under_cursor()
-    if node and node.absolute_path then
-      vim.cmd("ImagePreview " .. node.absolute_path)
+    if node and node.type == "file" then
+      require("image_preview").PreviewImage(node.absolute_path)
     end
   end, opts('Preview Image'))
 end

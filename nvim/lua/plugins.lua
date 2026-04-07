@@ -70,7 +70,7 @@ require("lazy").setup({
   -- Image preview (simpler alternative using chafa)
   {
     "adelarsq/image_preview.nvim",
-    event = "VeryLazy",
+    lazy = false,
     config = function()
       require("image_preview").setup({
         -- preview_method = "chafa", -- default is "ueberzug" or "chafa" if ueberzug is missing
