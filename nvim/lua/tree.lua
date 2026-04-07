@@ -15,8 +15,16 @@ local function on_attach(bufnr)
   vim.keymap.set('n', 'p', function()
     local node = api.tree.get_node_under_cursor()
     if node and node.type == "file" then
-      -- Snacks automatically handles Ghostty, tmux passthrough, and high-res rendering
-      Snacks.image.hover()
+      -- Use Snacks.win to open the file in a floating window.
+      -- Snacks automatically attaches its image viewer to image files.
+      Snacks.win({
+        file = node.absolute_path,
+        width = 0.7,
+        height = 0.7,
+        border = "rounded",
+        title = " " .. vim.fn.fnamemodify(node.absolute_path, ":t") .. " ",
+        title_pos = "center",
+      })
     end
   end, opts('Preview Image'))
 end
