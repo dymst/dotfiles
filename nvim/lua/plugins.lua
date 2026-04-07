@@ -66,4 +66,17 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp",
   "saadparwaiz1/cmp_luasnip",
   "L3MON4D3/LuaSnip",
+
+  -- LuaRocks for image.nvim dependencies
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1000,
+    config = true,
+  },
+
+  -- Image support
+  {
+    "3rd/image.nvim",
+    dependencies = { "luarocks.nvim" },
+  },
 })
