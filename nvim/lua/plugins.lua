@@ -36,18 +36,15 @@ require("lazy").setup({
     }
   },
 
-  -- Syntax highlighting
+  -- Syntax highlighting via nvim-treesitter `main` branch (the modern
+  -- rewrite). Parsers are compiled from bundled C sources using `cc`,
+  -- so no tree-sitter CLI dependency. Setup lives in lua/treesitter.lua.
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
     lazy = false,
-  },
-
-  -- Additional text objects via treesitter
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    lazy = false,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
   },
 
   -- Formatter
