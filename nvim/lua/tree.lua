@@ -11,8 +11,8 @@ local function on_attach(bufnr)
   -- Default mappings
   api.config.mappings.default_on_attach(bufnr)
 
-  -- Add custom mapping for image preview on 'p'
-  vim.keymap.set('n', 'p', function()
+  -- Add custom mapping for image preview on 'P' (capital to avoid conflict with paste)
+  vim.keymap.set('n', 'P', function()
     local node = api.tree.get_node_under_cursor()
     if node and node.type == "file" then
       -- Use Snacks.win to open the file in a floating window.
