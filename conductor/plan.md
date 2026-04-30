@@ -1,51 +1,58 @@
-# Plan: Add PNG Image Preview Support to Neovim
+# Modern C++ and Go Debugging/Navigation Setup for Neovim
 
-The goal is to enable PNG (and other image) previews within Neovim using the modern `image.nvim` plugin. This will provide in-buffer previews for images (especially in Markdown and Neorg) and can be extended to file explorers.
+## Objective
+Upgrade the Neovim configuration to provide an industry-standard, robust environment for C++ and Go development, specifically focusing on advanced Language Server Protocol (LSP) navigation and Debug Adapter Protocol (DAP) capabilities.
 
-## Proposed Changes
-
-### 1. Update Plugins
-- Add `vhyrro/luarocks.nvim` to manage Lua dependencies like `magick`.
-- Add `3rd/image.nvim` to provide the image rendering engine.
-- (Optional) Add `nvim-telescope/telescope-image.nvim` if Telescope previews are desired.
-
-### 2. Configuration
-- Create `nvim/lua/image-config.lua` to configure `image.nvim`.
-- Update `nvim/init.lua` to load the new configuration.
-
-### 3. Dependencies
-- Note: `image.nvim` requires `ImageMagick` and `Magick` (Lua bindings). `luarocks.nvim` will attempt to handle the Lua bindings, but `ImageMagick` must be installed on the system (e.g., via `sudo apt install imagemagick`).
-- A fallback backend like `chafa` is recommended for maximum compatibility.
+## Key Files & Context
+- `nvim/lua/plugins.lua`: Manage new DAP dependencies.
+- `nvim/lua/lsp.lua`: Enhance LSP keybindings for navigation.
+- `nvim/lua/keymaps.lua`: Add global debugger keybindings.
+- `nvim/lua/formatting.lua`: Add C++ formatting support.
+- `nvim/lua/dap.lua`: (New file) Configure DAP clients, UI, and Mason integration.
+- `nvim/init.lua`: Source the new DAP module.
 
 ## Implementation Steps
 
-### 1. Modify `nvim/lua/plugins.lua`
-Add the following plugin definitions:
-```lua
-  -- LuaRocks for image.nvim dependencies
-  {
-    "vhyrro/luarocks.nvim",
-    priority = 1000,
-    config = true,
-  },
+1. **Update Plugin Manager (`nvim/lua/plugins.lua`)**
+   - Add `mfussenegger/nvim-dap`.
+   - Add `rcarriga/nvim-dap-ui` and `nvim-neotest/nvim-nio` (required by dap-ui).
+   - Add `theHamsta/nvim-dap-virtual-text`.
+   - Add `jay-boman/mason-nvim-dap.nvim` to auto-install debuggers alongside LSP servers.
+   - Add `leoluz/nvim-dap-go` for Go-specific configurations.
 
-  -- Image support
-  {
-    "3rd/image.nvim",
-    dependencies = { "luarocks.nvim" },
-    config = function()
-      -- Configuration will be handled in a separate file or here
-    end,
-  },
-```
+2. **Enhance LSP Navigation (`nvim/lua/lsp.lua`)**
+   - Update the `on_attach` function to define local buffer keymaps when an LSP server connects:
+     - `gd` -> Go to definition (`vim.lsp.buf.definition()`)
+     - `K` -> Hover documentation (`vim.lsp.buf.hover()`)
+     - `gr` -> Go to references via Telescope (`require('telescope.builtin').lsp_references()`)
+     - `<leader>ca` -> Code action (`vim.lsp.buf.code_action()`)
+     - `<leader>rn` -> Rename (`vim.lsp.buf.rename()`)
 
-### 2. Create `nvim/lua/image-config.lua`
-Add standard configuration for `image.nvim` with `chafa` fallback and `nvim-tree` integration.
+3. **Configure Debugging (`nvim/lua/dap.lua`)**
+   - Create this new file.
+   - Initialize `mason-nvim-dap` to ensure `codelldb` (C++) and `delve` (Go) are installed.
+   - Setup `nvim-dap-ui` and bind it to automatically open/close on DAP events.
+   - Setup `nvim-dap-virtual-text`.
+   - Setup `nvim-dap-go`.
 
-### 3. Update `nvim/init.lua`
-Add `safe_require("image-config")`.
+4. **Define Global Keymaps (`nvim/lua/keymaps.lua`)**
+   - Add F-keys for debugger control:
+     - `<F5>` -> `dap.continue()`
+     - `<F10>` -> `dap.step_over()`
+     - `<F11>` -> `dap.step_into()`
+     - `<F12>` -> `dap.step_out()`
+   - Add `<leader>b` -> `dap.toggle_breakpoint()`.
+   - Add `<leader>du` -> `dapui.toggle()`.
 
-## Verification
-- Open a PNG file in Neovim.
-- Check if it renders (terminal support permitting).
-- Test in a Markdown file with an image link: `![image](path/to/image.png)`.
+5. **Update Formatting (`nvim/lua/formatting.lua`)**
+   - Add `cpp = { "clang-format" },` to the `formatters_by_ft` table.
+   - Add `c = { "clang-format" },` as well.
+
+6. **Initialize DAP (`nvim/init.lua`)**
+   - Add `safe_require("dap")` to ensure the new configuration is loaded on startup.
+
+## Verification & Testing
+- Open Neovim and run `:Lazy sync` to install the new plugins.
+- Run `:Mason` to verify `codelldb` and `delve` are installed.
+- Open a C++ or Go file and verify LSP navigation keys (`gd`, `K`) function correctly.
+- Place a breakpoint (`<leader>b`) and start a debug session (`<F5>`) to verify the DAP UI opens and attaches correctly.

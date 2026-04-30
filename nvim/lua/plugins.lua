@@ -50,6 +50,18 @@ require("lazy").setup({
   -- Formatter
   "stevearc/conform.nvim",
 
+  -- Debugging
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+      "jay-babu/mason-nvim-dap.nvim",
+      "leoluz/nvim-dap-go",
+    },
+  },
+
   -- Git related
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",

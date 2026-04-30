@@ -3,6 +3,8 @@ require("conform").setup({
     lua = { "stylua" },
     python = { "black" },
     go = { "gofmt" },
+    cpp = { "clang-format" },
+    c = { "clang-format" },
     javascript = { "prettier" },
     typescript = { "prettier" },
     javascriptreact = { "prettier" },
