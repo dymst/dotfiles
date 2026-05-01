@@ -1,0 +1,7 @@
+# Neovim local overrides
+nvim/lua/local_env.lua
+
+# Other potential local files
+.env
+.DS_Store
+*.swp

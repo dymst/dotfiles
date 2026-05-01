@@ -6,6 +6,9 @@ vim.cmd("colorscheme industry")
 
 require("plugins")
 
+-- Load local environment overrides if they exist (untracked by git)
+pcall(require, "local_env")
+
 local function safe_require(module)
   local success, err = pcall(require, module)
   if not success then

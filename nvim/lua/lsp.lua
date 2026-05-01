@@ -64,12 +64,36 @@ vim.lsp.config("clangd", {
     "--completion-style=detailed",
     "--function-arg-placeholders",
     "--fallback-style=llvm",
+    "--query-driver=/usr/bin/clang++,/usr/lib/llvm-*/bin/clang++",
   },
+})
+
+vim.lsp.config("gopls", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
+    },
+  },
+  -- Inheritance of environment variables (like GOPROXY, GOPRIVATE) is automatic
+  -- but we can explicitly pass them here if needed for specific setups.
+  env = {
+    GOPROXY = vim.env.GOPROXY,
+    GOPRIVATE = vim.env.GOPRIVATE,
+    GOSUMDB = vim.env.GOSUMDB,
+    CGO_CFLAGS = vim.env.CGO_CFLAGS,
+    CGO_LDFLAGS = vim.env.CGO_LDFLAGS,
+  }
 })
 
 -- Setup other servers
 for _, lsp in ipairs(servers) do
-  if lsp ~= "clangd" then
+  if lsp ~= "clangd" and lsp ~= "gopls" then
     vim.lsp.config(lsp, {
       on_attach = on_attach,
       capabilities = capabilities,
