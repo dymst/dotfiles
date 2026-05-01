@@ -29,30 +29,7 @@ require("nvim-dap-virtual-text").setup()
 -- Go setup
 require("dap-go").setup()
 
--- Load project-specific configurations
-local function load_project_config()
-  local cwd = vim.fn.getcwd()
-  local lua_config = cwd .. "/.dap.lua"
-  if vim.fn.filereadable(lua_config) == 1 then
-    dofile(lua_config)
-  end
-end
-
--- Load config on startup
-load_project_config()
-
--- Also reload config when switching directories (if using a plugin like 'direnv' or 'project.nvim')
-vim.api.nvim_create_autocmd("DirChanged", {
-  callback = function()
-    load_project_config()
-  end,
-})
-
-dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-dap.listeners.before.event_exited["dapui_config"] = dapui.close
-
--- Custom C++ configuration to prompt for arguments
+-- Default configurations
 dap.configurations.cpp = {
   {
     name = "Launch with Arguments",
@@ -69,5 +46,28 @@ dap.configurations.cpp = {
     stopOnEntry = false,
   },
 }
-
 dap.configurations.c = dap.configurations.cpp
+
+-- Load project-specific configurations (.dap.lua)
+-- This is called LAST to ensure it can override or append to defaults
+local function load_project_config()
+  local cwd = vim.fn.getcwd()
+  local lua_config = cwd .. "/.dap.lua"
+  if vim.fn.filereadable(lua_config) == 1 then
+    dofile(lua_config)
+  end
+end
+
+-- Load config on startup
+load_project_config()
+
+-- Also reload config when switching directories
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = function()
+    load_project_config()
+  end,
+})
+
+dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+dap.listeners.before.event_exited["dapui_config"] = dapui.close
