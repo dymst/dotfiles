@@ -1,5 +1,7 @@
 require("mason").setup()
 
+vim.lsp.set_log_level("debug")
+
 local servers = {
   "clangd",
   "gopls",
@@ -10,7 +12,9 @@ local servers = {
 
 -- LSP settings
 -- This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
+  print("LSP Attached: " .. client.name)
+
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
@@ -18,21 +22,19 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  -- VS Code / IntelliJ style keymaps
-  nmap("F12", require("telescope.builtin").lsp_definitions, "Go to Definition (VS Code)")
-  nmap("<C-b>", require("telescope.builtin").lsp_definitions, "Go to Definition (IntelliJ)")
+  -- VS Code style keymaps
+  nmap("<F12>", require("telescope.builtin").lsp_definitions, "Go to Definition")
   nmap("gd", require("telescope.builtin").lsp_definitions, "Go to Definition")
   
-  nmap("<S-F12>", require("telescope.builtin").lsp_references, "Go to References (VS Code)")
+  nmap("<S-F12>", require("telescope.builtin").lsp_references, "Go to References")
   nmap("gr", require("telescope.builtin").lsp_references, "Go to References")
   
-  nmap("<C-S-i>", vim.lsp.buf.implementation, "Go to Implementation")
   nmap("gi", vim.lsp.buf.implementation, "Go to Implementation")
   
   -- Refactoring
-  nmap("<S-F6>", vim.lsp.buf.rename, "Rename (IntelliJ)")
+  nmap("<S-F6>", vim.lsp.buf.rename, "Rename")
   nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
-  nmap("<M-Enter>", vim.lsp.buf.code_action, "Code Action (IntelliJ)")
+  nmap("<M-Enter>", vim.lsp.buf.code_action, "Code Action")
   nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
   -- Hover & Signature
@@ -78,10 +80,20 @@ vim.lsp.config("gopls", {
       },
       staticcheck = true,
       gofumpt = true,
+      -- Helps gopls find dependencies in corporate networks
+      env = {
+        GOPROXY = vim.env.GOPROXY,
+        GOPRIVATE = vim.env.GOPRIVATE,
+        GOSUMDB = vim.env.GOSUMDB,
+      },
+      -- This ensures CGO is parsed correctly using the local headers
+      buildFlags = { "-mod=readonly" },
+      completeUnimported = true,
+      usePlaceholders = true,
+      directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
     },
   },
-  -- Inheritance of environment variables (like GOPROXY, GOPRIVATE) is automatic
-  -- but we can explicitly pass them here if needed for specific setups.
+  -- Pass the same environment to the process itself
   env = {
     GOPROXY = vim.env.GOPROXY,
     GOPRIVATE = vim.env.GOPRIVATE,

@@ -17,7 +17,7 @@ set_telescope_keymap('<leader>fo', 'oldfiles')
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
 vim.keymap.set('n', '<F10>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
 vim.keymap.set('n', '<F11>', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
-vim.keymap.set('n', '<F12>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
+vim.keymap.set('n', '<S-F11>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
 vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
 vim.keymap.set('n', '<leader>B', function()
   require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
@@ -25,4 +25,8 @@ end, { desc = 'Debug: Set Breakpoint' })
 
 -- Toggle to see last session result. Without this, if you closed the UI, you cannot see it again until next session
 vim.keymap.set('n', '<F7>', function() require('dapui').toggle() end, { desc = 'Debug: See last session result.' })
+
+-- Back and Forth Navigation
+vim.keymap.set('n', '<M-Left>', '<C-o>', { desc = 'Navigate Back' })
+vim.keymap.set('n', '<M-Right>', '<C-i>', { desc = 'Navigate Forward' })
 
