@@ -22,6 +22,10 @@ require("mason-nvim-dap").setup({
 -- Dap UI setup
 dapui.setup()
 
+-- Increase timeout for slow adapters (like codelldb)
+dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
+dap.defaults.fallback.focus_terminal = true
+
 -- Configure signs
 vim.fn.sign_define('DapBreakpoint', { text='●', texthl='DapBreakpoint', linehl='', numhl='' })
 vim.fn.sign_define('DapBreakpointCondition', { text='●', texthl='DapBreakpointCondition', linehl='', numhl='' })
