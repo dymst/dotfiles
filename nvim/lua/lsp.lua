@@ -1,7 +1,5 @@
 require("mason").setup()
 
-vim.lsp.set_log_level("debug")
-
 local servers = {
   "clangd",
   "gopls",
