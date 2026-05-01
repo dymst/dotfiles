@@ -20,8 +20,14 @@ require("mason-nvim-dap").setup({
 })
 
 -- Dap UI setup
--- For more information, see |:help nvim-dap-ui|
 dapui.setup()
+
+-- Configure signs
+vim.fn.sign_define('DapBreakpoint', { text='●', texthl='DapBreakpoint', linehl='', numhl='' })
+vim.fn.sign_define('DapBreakpointCondition', { text='●', texthl='DapBreakpointCondition', linehl='', numhl='' })
+vim.fn.sign_define('DapLogPoint', { text='◆', texthl='DapLogPoint', linehl='', numhl='' })
+vim.fn.sign_define('DapStopped', { text='▶', texthl='DapStopped', linehl='DebugStoppedLine', numhl='' })
+vim.fn.sign_define('DapBreakpointRejected', { text='ⓧ', texthl='DapBreakpointRejected', linehl='', numhl='' })
 
 -- Set up virtual text
 require("nvim-dap-virtual-text").setup()
