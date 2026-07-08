@@ -32,6 +32,9 @@ end
 -- setup with on_attach
 require("nvim-tree").setup({
   on_attach = on_attach,
+  view = {
+    adaptive_size = true,
+  },
 })
 
 require("nvim-web-devicons").setup {
